@@ -1,0 +1,89 @@
+button {
+  all: unset; 
+  background: none; 
+  border: none; 
+  padding: 0; 
+  font: inherit; 
+  cursor: pointer; 
+}
+
+.navbar {
+  position: relative;
+  background-color: black;
+  padding: 1rem 0;
+  overflow: hidden;
+}
+
+.starry-background {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  opacity: 0.6;
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #3CA6B8, #7ADCA2); 
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  background: linear-gradient(to right, #3CA6B8, #7ADCA2); 
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.nav-link:hover {
+  transform: scale(1.05);
+}
+
+.profile-link {
+  border-radius: 15px;
+  padding: 3px;
+  background: linear-gradient(to right, #3CA6B8, #7ADCA2); 
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.profile-link:hover {
+  transform: scale(1.05);
+}
+
+.profile-icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}

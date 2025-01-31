@@ -1,0 +1,140 @@
+.signup-container {
+  min-height: 100vh;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  margin-top: -60px;
+}
+
+
+.signup-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  
+  $stars: 500; 
+  $backgrounds: (); 
+
+  @for $i from 1 through $stars {
+    $x: random(1536) * 1px; 
+    $y: random(1000) * 1px; 
+
+
+    $backgrounds: append($backgrounds, radial-gradient(2px 2px at #{$x} #{$y}, white, rgba(0,0,0,0)), comma);
+  }
+
+  background: $backgrounds;
+  background-repeat: repeat;
+  opacity: 0.6;
+  z-index: 1;
+
+  animation: moveStars 500s linear infinite;
+}
+
+.signup-form {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 20px rgba(60, 166, 184, 0.2); 
+  border: 1px solid rgba(60, 166, 184, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.signup-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  background: linear-gradient(to right, #3CA6B8, #7ADCA2); 
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  z-index: 2;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid rgba(60, 166, 184, 0.3); 
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #3CA6B8; 
+  box-shadow: 0 0 10px rgba(60, 166, 184, 0.2); 
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+button.signup-button {
+  width: 93%;
+  padding: 0.75rem;
+  background: linear-gradient(to right, #3CA6B8, #7ADCA2); 
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+button.signup-button:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+button.signup-button:active {
+  transform: scale(0.98);
+}
+
+.login-link {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.login-link a {
+  color: #7ADCA2; 
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+  color: #3CA6B8; 
+}
+
+@keyframes moveStars {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 10000px 10000px; 
+  }
+}
+
