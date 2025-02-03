@@ -1,6 +1,11 @@
 import json
+import os
+from django.contrib.auth.models import User
 from django.shortcuts import HttpResponse, get_object_or_404
 from django.urls import reverse
+from django.core.files.storage import default_storage
+from django.conf import settings
+from django.core.files.base import ContentFile
 from jsonschema import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -239,28 +244,6 @@ class RegenerateOptionsView(APIView):
 
 
 class GeneratePDFView(APIView):
-    """
-    Endpoint to generate a well-formatted PDF for a given Story ID.
-    """
-    @extend_schema(
-        summary="Generate a well-formatted PDF from Story content",
-        description=(
-            "This endpoint takes a `story_id` as input, retrieves the story and its associated "
-            "blocks from the database, and generates a PDF containing the story's title, metadata, "
-            "and the content of the story blocks along with their associated choices (if any). "
-            "The response returns a downloadable PDF file."
-        ),
-        parameters=[
-            {
-                "name": "story_id",
-                "in": "path",
-                "required": True,
-                "description": "The ID of the story for which the PDF needs to be generated.",
-                "schema": {"type": "integer", "example": 1},
-            },
-        ],
-    )
-    
     def get(self, request, story_id, *args, **kwargs):
         try:
             # Fetch the story and its blocks
@@ -269,6 +252,10 @@ class GeneratePDFView(APIView):
 
             if not blocks.exists():
                 return Response({"error": "No story blocks found for the given Story ID."}, status=status.HTTP_404_NOT_FOUND)
+
+            # Ensure the directory exists
+            pdf_dir = os.path.join(settings.MEDIA_ROOT, 'story_pdfs')
+            os.makedirs(pdf_dir, exist_ok=True)
 
             # Prepare the PDF buffer
             buffer = BytesIO()
@@ -288,9 +275,9 @@ class GeneratePDFView(APIView):
             paragraph_style = ParagraphStyle(
                 "Paragraph",
                 parent=styles["BodyText"],
-                spaceAfter=12,  # Space after each paragraph
-                leading=14,     # Line height
-                alignment=4,    # Justify text
+                spaceAfter=12,
+                leading=14,
+                alignment=4,
             )
 
             # PDF content
@@ -308,12 +295,11 @@ class GeneratePDFView(APIView):
             content.append(Paragraph(metadata, metadata_style))
             content.append(Spacer(1, 0.25 * inch))
 
-            # Add each story block as a paragraph
+            # Add each story block
             for block in blocks:
                 content.append(Paragraph(block.content, paragraph_style))
 
                 if block.choices:
-                    # Format each choice as 'choice X: ...'
                     choices_text = "<b>Choices:</b><br/>"
                     for i, (key, value) in enumerate(block.choices.items(), start=1):
                         choices_text += f"choice {i}: {value}<br/>"
@@ -325,13 +311,44 @@ class GeneratePDFView(APIView):
             pdf.build(content)
             buffer.seek(0)
 
-            # Return the PDF as a response
-            response = HttpResponse(buffer, content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="{story.title}.pdf"'
-            return response
+            # Save the PDF file
+            pdf_filename = f"story_{story_id}.pdf"
+            pdf_path = f"story_pdfs/{pdf_filename}"
+            default_storage.save(pdf_path, ContentFile(buffer.getvalue()))
+
+            # Update the Story model with the PDF path
+            story.pdf.name = pdf_path
+            story.save()
+
+            # Return response
+            return Response({
+                "message": "PDF generated successfully.",
+                "pdf_url": default_storage.url(pdf_path)
+            })
 
         except Story.DoesNotExist:
             return Response({"error": "Story not found."}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({"error": f"An error occurred: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class UserPDFListView(APIView):
+    """
+    Endpoint to retrieve all PDFs associated with a given user.
+    """
     
+    def get(self, request, user_id, *args, **kwargs):
+        try:
+            user = User.objects.get(id=user_id)
+            stories = Story.objects.filter(user=user, pdf__isnull=False).exclude(pdf='')  # Fetch stories with PDFs
+
+            if not stories.exists():
+                return Response({"message": "No PDFs found for this user."}, status=status.HTTP_404_NOT_FOUND)
+
+            pdf_list = [{"story_id": story.id, "title": story.title, "pdf_url": default_storage.url(story.pdf.name)} for story in stories]
+
+            return Response({"user_id": user_id, "pdfs": pdf_list}, status=status.HTTP_200_OK)
+
+        except User.DoesNotExist:
+            return Response({"error": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": f"An error occurred: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

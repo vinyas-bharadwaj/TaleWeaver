@@ -44,12 +44,6 @@ def generate_story_block(previous_story, user_choice):
 def generate_story_options(current_story: str) -> dict:
     """
     Generate story continuation options using Together AI's Mistral model via Langchain.
-    
-    Args:
-        current_story (str): The current story text
-    
-    Returns:
-        dict: Dictionary containing three story continuation options
     """
     
     # Define the prompt template with escaped curly braces for the JSON format

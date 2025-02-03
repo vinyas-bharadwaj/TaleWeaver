@@ -7,9 +7,9 @@ const Signup = () => {
   let { signupUser } = useContext(AuthContext);
 
   return (
-    <div className={styles['signup-container']} onSubmit={signupUser}>
+    <div className={styles['signup-container']}>
       <h1 className={styles['signup-title']}>Sign Up</h1>
-      <form className={styles['signup-form']}>
+      <form className={styles['signup-form']} onSubmit={signupUser}>
         <div className={styles['input-group']}>
           <label htmlFor="username">Username</label>
           <input 
@@ -40,7 +40,7 @@ const Signup = () => {
         <div className={styles['input-group']}>
           <label htmlFor="confirm-password">Confirm Password</label>
           <input 
-            name='confirm-password'
+            name='confirmPassword'
             type="password" 
             placeholder="Confirm your password" 
             required 

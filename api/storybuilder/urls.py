@@ -8,4 +8,5 @@ urlpatterns = [
     path('generate-story/', views.StoryBlockView.as_view()),
     path('regenerate-options/<str:story_id>', views.RegenerateOptionsView.as_view(), name='regenerate-options'),
     path('generate-pdf/<str:story_id>/', views.GeneratePDFView.as_view()),
+    path('list-pdf/<str:user_id>/', views.UserPDFListView.as_view()),
 ]

@@ -8,7 +8,6 @@
   padding: 2rem;
   position: relative;
   overflow: hidden;
-  margin-top: -60px;
 }
 
 
@@ -16,7 +15,11 @@
   content: '';
   position: absolute;
   inset: 0;
-  
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px); 
+
+
   $stars: 500; 
   $backgrounds: (); 
 
@@ -33,7 +36,7 @@
   opacity: 0.6;
   z-index: 1;
 
-  animation: moveStars 500s linear infinite;
+  animation: moveStars 1000s linear infinite;
 }
 
 .signup-form {

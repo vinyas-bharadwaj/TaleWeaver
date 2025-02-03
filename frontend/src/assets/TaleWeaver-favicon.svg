@@ -1,14 +1,18 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="32" height="32" viewBox="0 0 34 40" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#3CA6B8;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#7ADCA2;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <rect width="32" height="32" rx="6" fill="#0d0d0d"/>
-  <path d="M6 15C6 12 9 9 12 15C15 21 18 18 18 15" stroke="url(#orangeGradient)" strokeWidth="2" strokeLinecap="round" />
-  <path d="M14 15C14 12 17 9 20 15C23 21 26 18 26 15" stroke="url(#orangeGradient)" strokeWidth="2" strokeLinecap="round" />
   
-  <path d="M6 25C6 28 9 31 12 25C15 19 18 22 18 25" stroke="url(#orangeGradient)" strokeWidth="2" strokeLinecap="round" />
-  <path d="M14 25C14 28 17 31 20 25C23 19 26 22 26 25" stroke="url(#orangeGradient)" strokeWidth="2" strokeLinecap="round" />
+  <!-- Adjusted Circle to Avoid Cutting Off -->
+  <circle cx="16" cy="20" r="17" stroke="url(#orangeGradient)" stroke-width="2" fill="none" />
+  
+  <!-- Original Logo Paths -->
+  <path d="M6 15C6 12 9 9 12 15C15 21 18 18 18 15" stroke="url(#orangeGradient)" stroke-width="2" stroke-linecap="round" />
+  <path d="M14 15C14 12 17 9 20 15C23 21 26 18 26 15" stroke="url(#orangeGradient)" stroke-width="2" stroke-linecap="round" />
+  
+  <path d="M6 25C6 28 9 31 12 25C15 19 18 22 18 25" stroke="url(#orangeGradient)" stroke-width="2" stroke-linecap="round" />
+  <path d="M14 25C14 28 17 31 20 25C23 19 26 22 26 25" stroke="url(#orangeGradient)" stroke-width="2" stroke-linecap="round" />
 </svg>

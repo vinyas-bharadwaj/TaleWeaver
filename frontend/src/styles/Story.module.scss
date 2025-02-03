@@ -1,0 +1,95 @@
+.storyContainer {
+    min-height: 100vh;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        left: 0;
+        width: 100%;
+        
+        $stars: 500;
+        $backgrounds: ();
+
+        @for $i from 1 through $stars {
+            $x: random(1536) * 1px;
+            $y: random(1000) * 1px;
+            $backgrounds: append($backgrounds, radial-gradient(2px 2px at #{$x} #{$y}, white, rgba(0,0,0,0)), comma);
+        }
+
+        background: $backgrounds;
+        background-repeat: repeat;
+        opacity: 0.6;
+        z-index: 2;     
+        animation: moveStars 1000s linear infinite;
+    }
+}
+
+.storyTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    background: linear-gradient(to right, #3CA6B8, #7ADCA2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.storyForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 2; // Ensure form is above background
+}
+
+.inputField, .textareaField {
+    width: 300px;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #222;
+    color: white;
+    position: relative;
+    z-index: 2; // Ensure inputs are above background
+}
+
+.createButton {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(to right, #3CA6B8, #7ADCA2);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    position: relative;
+    z-index: 2; // Ensure button is above background
+}
+
+.createButton:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.createButton:active {
+    transform: scale(0.95);
+}
+
+@keyframes moveStars {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 10000px 10000px;
+    }
+}

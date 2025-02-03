@@ -1,0 +1,170 @@
+.profile-container {
+  min-height: 100vh;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  
+  $stars: 500; 
+  $backgrounds: (); 
+
+  @for $i from 1 through $stars {
+    $x: random(1536) * 1px; 
+    $y: random(1000) * 1px; 
+
+    $backgrounds: append($backgrounds, radial-gradient(2px 2px at #{$x} #{$y}, white, rgba(0,0,0,0)), comma);
+  }
+
+  background: $backgrounds;
+  background-repeat: repeat;
+  opacity: 0.6;
+  z-index: 1;
+
+  animation: moveStars 1000s linear infinite;
+}
+
+.profile-form {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 550px;
+  box-shadow: 0 0 20px rgba(60, 166, 184, 0.2);
+  border: 1px solid rgba(60, 166, 184, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.profile-picture-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  position: relative;
+
+}
+
+.file-upload {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.file-upload-input {
+  display: none;
+}
+
+.file-upload-button {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.file-upload-button::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(to right, #3CA6B8, #7ADCA2);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.file-upload-button:hover {
+  transform: scale(1.05);
+}
+
+.file-upload-button:active {
+  transform: scale(0.98);
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid rgba(60, 166, 184, 0.3);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  outline: none;
+  border-color: #3CA6B8;
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.2);
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.profile-button {
+  width: 95%;
+  padding: 0.75rem;
+  background: linear-gradient(to right, #3CA6B8, #7ADCA2);
+  text-align: center;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.profile-button:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+.profile-button:active {
+  transform: scale(0.98);
+}
+
+@keyframes moveStars {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 10000px 10000px;
+  }
+}
+
