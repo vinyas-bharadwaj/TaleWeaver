@@ -48,6 +48,8 @@ const Story = () => {
             story_id: storyId,
             starting_prompt: prompt
         };
+
+        console.log(requestData);
     
         try {
             const response = await fetch("http://127.0.0.1:8000/story/generate-story/", {
@@ -62,10 +64,13 @@ const Story = () => {
             const data = await response.json();
     
             if (response.ok) {
-                console.log("Response from generate-story:", data);  // Log the response data
-                // You can navigate or perform any other actions after logging the response
+                // Save the response data to localStorage
+                localStorage.setItem('storyResponse', JSON.stringify(data));
+                console.log('succesfully generated story', data);
+                // Navigate to the chat page
+                navigate("/chat");
             } else {
-                console.error("Failed to generate story:", data);  // Log error if the request fails
+                console.error("Failed to generate story:", data);
                 alert("Failed to generate story");
             }
         } catch (error) {

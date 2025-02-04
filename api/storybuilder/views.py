@@ -17,7 +17,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.units import inch
 from io import BytesIO
-from .utils import generate_story_block, generate_story_options
+from .utils import generate_story_block, generate_story_options, conclude_story
 from .models import Story, StoryBlock
 
 
@@ -242,6 +242,74 @@ class RegenerateOptionsView(APIView):
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
+class ConcludeStoryView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    @extend_schema(
+        summary="Conclude the story by generating the final block.",
+        description=(
+            "Fetches the existing story and generates a final conclusion block. "
+            "If no blocks exist, an error is returned."
+        ),
+        request={
+            "application/json": {
+                "type": "object",
+                "properties": {
+                    "story_id": {
+                        "type": "integer",
+                        "description": "The ID of the story to conclude.",
+                        "example": 1
+                    }
+                },
+                "required": ["story_id"]
+            }
+        },
+    )
+    def post(self, request):
+        story_id = request.data.get("story_id")
+        
+        if not story_id:
+            return Response(
+                {"detail": "'story_id' is required."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Fetch the story
+        story = get_object_or_404(Story, id=story_id, user=request.user)
+        
+        # Ensure the story has content before concluding
+        all_blocks = story.blocks.all()
+        if not all_blocks:
+            return Response(
+                {"detail": "Cannot conclude an empty story."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Combine story text from existing blocks
+        full_story_text = " ".join(block.content for block in all_blocks)
+        
+        # Generate the final block
+        final_block = conclude_story(full_story_text)
+        
+        # Validate generated content
+        if not final_block:
+            return Response(
+                {"error": "Failed to generate the final block."},
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY
+            )
+        
+        # Save the final block
+        new_block = StoryBlock.objects.create(
+            story=story,
+            content=final_block,
+            choices={},  # No further choices since it's the conclusion
+        )
+        
+        return Response(
+            {"final_block": new_block.content},
+            status=status.HTTP_200_OK
+        )
+    
 
 class GeneratePDFView(APIView):
     def get(self, request, story_id, *args, **kwargs):

@@ -1,0 +1,152 @@
+.pageContainer {
+    min-height: 100vh;
+    background-color: #000;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+}
+
+.pageContainer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 60px);
+    
+    $stars: 500; 
+    $backgrounds: (); 
+  
+    @for $i from 1 through $stars {
+      $x: random(1536) * 1px; 
+      $y: random(1000) * 1px; 
+  
+      $backgrounds: append($backgrounds, radial-gradient(2px 2px at #{$x} #{$y}, white, rgba(0,0,0,0)), comma);
+    }
+  
+    background: $backgrounds; 
+    background-repeat: repeat;
+    opacity: 0.6;
+    z-index: 1;
+  
+    animation: moveStars 1000s linear infinite;
+}
+
+.chatContainer {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+
+    // Gradient border effect
+    &::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #3CA6B8, #7ADCA2);
+        border-radius: 10px;
+        z-index: -1;
+        animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    // Inner container for content
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.95);
+        border-radius: 8px;
+        z-index: -1;
+    }
+}
+
+.storyBlock {
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    margin-bottom: 2rem;
+}
+
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: #fff;
+    animation: blink 1s infinite;
+    margin-left: 2px;
+    vertical-align: middle;
+}
+
+.optionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.optionButton {
+    padding: 1rem;
+    background: linear-gradient(to right, #3CA6B8, #7ADCA2);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    text-align: left;
+    line-height: 1.4;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.loadingIndicator {
+    text-align: center;
+    color: #7ADCA2;
+    font-size: 1.1rem;
+    margin-top: 2rem;
+    animation: pulse 1.5s infinite;
+}
+
+
+@keyframes moveStars {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 10000px 10000px; 
+    }
+  }
+  

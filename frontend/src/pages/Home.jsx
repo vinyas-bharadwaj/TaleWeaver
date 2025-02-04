@@ -9,7 +9,7 @@ const Home = () => {
 
   return (
     <div className={styles["home-container"]}>
-      <h1 className={styles['home-title']}>Hello {user? user.user_id: 'User'}</h1>
+      <h1 className={styles['home-title']}>Hello {user? user.username: 'User'}</h1>
       <h1 className={styles['home-title']}>Welcome to TaleWeaver</h1>
       <button onClick={() => navigate('/story')} className={styles['create-button']}>Create</button>
     </div>

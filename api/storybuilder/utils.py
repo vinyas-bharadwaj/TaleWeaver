@@ -40,6 +40,28 @@ def generate_story_block(previous_story, user_choice):
     
     return next_story
 
+def conclude_story(previous_story):
+    prompt = PromptTemplate(
+        input_variables=["current_story"],
+        template=(
+            "You are a novelist given the task to conclude the story with a compelling ending"
+            "Write a suitable conclusion to the following story, tying up all loose ends"
+            "Story so far:\n{current_story}\n\n"
+        )
+    )
+
+    llm = Together(
+        model="mistralai/Mistral-7B-Instruct-v0.1",
+        temperature=0,  # Ensures minimum randomness
+        max_tokens=512,
+        together_api_key=os.environ["TOGETHER_API_KEY"]
+    )
+    
+    chain = prompt | llm
+
+    final_block = chain.invoke({'current_story': previous_story})
+
+    return final_block
 
 def generate_story_options(current_story: str) -> dict:
     """
@@ -64,7 +86,6 @@ def generate_story_options(current_story: str) -> dict:
             "4. Do NOT use line breaks within the sentences\n"
             "5. Do NOT include any text outside the OPTIONS tags\n"
             "6. Keep all punctuation and formatting EXACTLY as shown\n\n"
-            "7. Make sure the 3rd option always leads to the conclusion of the story\n"
             "Story so far:\n{current_story}\n\n"
             "Generate options:"
         )
