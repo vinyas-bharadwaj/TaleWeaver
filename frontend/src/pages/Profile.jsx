@@ -25,7 +25,7 @@ const Profile = () => {
     let accessToken = tokens?.access;
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/user/profile/", {
+      const response = await fetch("https://taleweaver-t7zq.onrender.com/user/profile/", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -81,7 +81,7 @@ const Profile = () => {
     let accessToken = tokens?.access;
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/user/profile/", {
+      const response = await fetch("https://taleweaver-t7zq.onrender.com/user/profile/", {
         method: profileExists ? "PUT" : "POST",
         body: formDataToSend,
         headers: {

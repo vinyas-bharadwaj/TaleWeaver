@@ -16,7 +16,7 @@ const Story = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await fetch("http://127.0.0.1:8000/story/create-story/", {
+            const response = await fetch("https://taleweaver-t7zq.onrender.com/story/create-story/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const Story = () => {
         console.log(requestData);
     
         try {
-            const response = await fetch("http://127.0.0.1:8000/story/generate-story/", {
+            const response = await fetch("https://taleweaver-t7zq.onrender.com/story/generate-story/", {
                 method: "POST", 
                 headers: {
                     "Content-Type": "application/json",

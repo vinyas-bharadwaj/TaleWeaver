@@ -50,7 +50,7 @@ const Chat = () => {
         };
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/story/generate-story/", {
+            const response = await fetch("https://taleweaver-t7zq.onrender.com/story/generate-story/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -82,7 +82,7 @@ const Chat = () => {
         const storyId = JSON.parse(localStorage.getItem('storyDetails')).id;
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/story/conclude-story/", {
+            const response = await fetch("https://taleweaver-t7zq.onrender.com/story/conclude-story/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -113,7 +113,7 @@ const Chat = () => {
         const storyId = JSON.parse(localStorage.getItem('storyDetails')).id;
     
         try {
-            const response = await fetch(`http://127.0.0.1:8000/story/generate-pdf/${storyId}/`, {
+            const response = await fetch(`https://taleweaver-t7zq.onrender.com/story/generate-pdf/${storyId}/`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${access}`,
@@ -124,7 +124,7 @@ const Chat = () => {
     
             if (response.ok) {
                 // Convert relative path to absolute URL
-                const backendUrl = "http://127.0.0.1:8000";  // Change if using a different backend URL
+                const backendUrl = "https://taleweaver-t7zq.onrender.com/";  // Change if using a different backend URL
                 setPdfLink(`${backendUrl}${data.pdf_url}`);
             } else {
                 console.error("Failed to generate PDF:", data);

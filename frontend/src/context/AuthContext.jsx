@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
             return;
         }
 
-        let response = await fetch("http://127.0.0.1:8000/user/create/", {
+        let response = await fetch("https://taleweaver-t7zq.onrender.com/user/create/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     // Login function
     let loginUser = async (e) => {
         e.preventDefault();
-        let response = await fetch("http://127.0.0.1:8000/api/token/", {
+        let response = await fetch("https://taleweaver-t7zq.onrender.com/api/token/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
         if (!authTokens) return;
 
         try {
-            let response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
+            let response = await fetch("https://taleweaver-t7zq.onrender.com/api/token/refresh/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
