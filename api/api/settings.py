@@ -159,4 +159,10 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
 }
 
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "taleweaver-t7zq.onrender.com",
+]
+
 CORS_ALLOW_ALL_ORIGINS = True
