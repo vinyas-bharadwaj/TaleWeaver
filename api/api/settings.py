@@ -163,6 +163,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     "taleweaver-t7zq.onrender.com",
+    "taleweaver-1.onrender.com"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
