@@ -11,6 +11,7 @@ charset-normalizer==3.4.1
 colorama==0.4.6
 dataclasses-json==0.6.7
 Django==5.1.5
+django-cors-headers==4.6.0
 django-silk==5.3.2
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.4.0
