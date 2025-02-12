@@ -89,7 +89,6 @@ Pygments
 PyJWT
 python-dateutil
 python-dotenv
-pywin32
 PyYAML
 pyzmq
 referencing
